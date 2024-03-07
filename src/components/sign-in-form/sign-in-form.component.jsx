@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createUserDocumentFromAuth, signInAuthWithEmailAndPassword, signInWithGooglePopup } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss';
-import ButtonComponent from "../button/button.component";
+import ButtonComponent, { buttonTypeClasses } from "../button/button.component";
 
 
 const defaultFormFields = {
@@ -19,27 +19,17 @@ const SignInForm = () => {
     }
 
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGooglePopup();
+        await signInWithGooglePopup();
     };
 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         try {
-            const { user } = await signInAuthWithEmailAndPassword(email, password);
+            await signInAuthWithEmailAndPassword(email, password);
             resetFormFields();
         } catch (error) {
-            switch (error.code) {
-                case 'auth/wrong-password':
-                    alert("Incorrect Password:/");
-                    break
-                case 'auth/user-not-found':
-                    alert("Nop user associated with this email");
-                    break
-                default:
-                    console.log(error);
-            }
+           console.log("User sign in failed", error);
         }
     }
 
@@ -70,7 +60,12 @@ const SignInForm = () => {
                     value={password} />
                 <div className="buttons-container">
                     <ButtonComponent type="submit"> Sign In </ButtonComponent>
-                    <ButtonComponent type="button" buttonType='google' onClick={signInWithGoogle}> Google Sign in </ButtonComponent>
+                    <ButtonComponent
+                        type="button"
+                        buttonType={buttonTypeClasses.google}
+                        onClick={signInWithGoogle}>
+                        Google Sign in
+                    </ButtonComponent>
                 </div>
             </form>
         </div>
