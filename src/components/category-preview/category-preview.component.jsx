@@ -6,7 +6,7 @@ const CategoryPreview = ({ title, products }) => {
         <div className='category-preview-container'>
             <h2>
                 <Link className='title' to={title}>
-                    {title.toUpperCase()}
+                    {title?.toUpperCase()}
                 </Link>
             </h2>
             <div className='preview'>
