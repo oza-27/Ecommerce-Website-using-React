@@ -5,12 +5,11 @@ import CategoryPreview from '../../components/category-preview/category-preview.
 
 const CategoriesPreview = () => {
     const { categoriesMap } = useContext(CategoriesContext);
-
     return (
         <Fragment>
             {Object.keys(categoriesMap).map((title) => {
                 const products = categoriesMap[title];
-                return <CategoryPreview key={title} products={products} />
+                return <CategoryPreview title={title} products={products} />
             })}
         </Fragment>
     );
